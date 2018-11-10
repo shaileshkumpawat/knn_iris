@@ -28,6 +28,7 @@ def norm(p , q , dim):  #dim is for dimension
         d += pow((p[x]-q[x]) , 2)
     return math.sqrt(d)
 
+#getting a sorted-list of k-nearest neighbors
 import operator
 def knn(trainingset , test , k):
     distances = list()
@@ -45,7 +46,7 @@ def knn(trainingset , test , k):
 #collecting the maximum votes for a class
 import operator
 def get_class(knn):
-    classvotes = {}
+    classvotes = {} #created a dictionary to keep counts of neighbors
     for x in range(len(knn)):
         cl = knn[x][-1]
         if cl in classvotes:
@@ -55,18 +56,19 @@ def get_class(knn):
         sortedvotes = sorted(classvotes.items(), key=operator.itemgetter(1) , reverse = True)
     return sortedvotes[0][0]
 
+#putting the entire implementation in a main() function 
 def main():
     trainingset = list()
     testset = list()
     loaddataset(trainingset , testset)
     print("train set" , len(trainingset))
     print("test set" , len(testset))
-    #predictions = list()
+    #predictions = list() 
     k=5
     for x in range(len(testset)):
         neighbors = knn(trainingset,testset[x],k)
         result = get_class(neighbors)
-        predictions.append(result)
+        #predictions.append(result)
         print('predicted: ', result , 'actual: ' , testset[x][-1])
 
 main()
